@@ -72,7 +72,9 @@ limit 5;
 
 #7. Is "Academy Dinosaur" available for rent from Store 1?
 
-select sto.store_id, ci.city, co.country, count(f.title) as 'Copies of "Academy Dinosaur"'
+select sto.store_id, ci.city, co.country, f.title, case
+when count(f.title) > 0 then 'Available in Store 1'
+when count(f.title) = 0 then 'Not available in Store 1' end as 'Availability'
 from store sto
 join staff sta on sto.manager_staff_id = sta.staff_id
 join rental r on sta.staff_id = r.staff_id
